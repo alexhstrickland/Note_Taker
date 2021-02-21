@@ -3,7 +3,7 @@ const express = require('express');
 const { Server } = require('http');
 const path = require('path');
 const fs = require('fs');
-const nanoid = require('nanoid');
+
 
 
 
@@ -25,7 +25,6 @@ app.get('/api/notes', (req, res) => res.sendFile(path.join(__dirname, './db/db.j
 
 app.post('/api/notes', (req, res) => {
     const newSavedNote = req.body;
-    newSavedNote.id = nanoid();
     console.log(newSavedNote);
     const notes = JSON.parse(fs.readFileSync(path.join(__dirname, './db/db.json')));
     console.log(notes);
@@ -35,7 +34,6 @@ app.post('/api/notes', (req, res) => {
         if(err) console.log('error', err)
     });
     return res.json({});
-
 })
 
 // app.delete()
