@@ -17,11 +17,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Get routes
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
+app.get("/^\/.*/", (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
+// app.get('/*', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
+
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
 
 app.get('/api/notes', (req, res) => res.sendFile(path.join(__dirname, './db/db.json')));
 app.get('/api/notes/:id', (req, res) => res.sendFile(path.join(__dirname, './db/db.json')));
+// app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
 
 
 app.post('/api/notes', (req, res) => {
@@ -38,10 +41,17 @@ app.post('/api/notes', (req, res) => {
     return res.json({});
 })
 
-app.delete('/api/notes/:id', (req,res) => {
+app.delete('/api/notes/:id', (req, res) => {
     const notes = JSON.parse(fs.readFileSync(path.join(__dirname, './db/db.json')));
-    let it = notes.findIndex(newSavedNote => newSavedNote.id === 'uuid')
     console.log(`delete ${req.params.id}`);
+    let idNote = `${req.params.id}`
+    let deleteNote = notes.filter(notes => notes.id === idNote);
+    console.log(deleteNote)
+    notes.splice(deleteNote, 1)
+    fs.writeFile('./db/db.json', JSON.stringify(notes), function(err, result) {
+        if(err) console.log('error', err)
+    });
+    return res.json({});
 })
 
 app.listen(PORT, () => console.log(`App listening on ${PORT}`));
