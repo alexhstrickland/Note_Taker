@@ -20,4 +20,9 @@ app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes
 
 app.get('/api/notes', (req, res) => res.json(db));
 
+app.post('/api/notes', (req, res) => {
+    const newSavedNote = req.body;
+    console.log(newSavedNote);
+})
+
 app.listen(PORT, () => console.log(`App listening on ${PORT}`));
