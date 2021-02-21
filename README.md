@@ -21,6 +21,10 @@
   ```
 
   ## Usage
+
+  ![Note_Taker](asset/images/screenshot_website.png)
+
+  [Deployed Application](https://notelist-taker-app.herokuapp.com/)
   
 
   ## License
