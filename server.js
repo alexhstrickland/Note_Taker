@@ -45,7 +45,7 @@ app.delete('/api/notes/:id', (req, res) => {
     const notes = JSON.parse(fs.readFileSync(path.join(__dirname, './db/db.json')));
     console.log(`delete ${req.params.id}`);
     let idNote = `${req.params.id}`
-    let deleteNote = notes.filter(notes => notes.id === idNote);
+    let deleteNote = notes.findIndex(notes => notes.id === idNote);
     console.log(deleteNote)
     notes.splice(deleteNote, 1)
     fs.writeFile('./db/db.json', JSON.stringify(notes), function(err, result) {
